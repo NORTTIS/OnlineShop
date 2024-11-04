@@ -17,11 +17,19 @@ namespace OnlineShop
     /// <summary>
     /// Interaction logic for Signuo.xaml
     /// </summary>
-    public partial class Signuo : Window
+    public partial class Signup : Window
     {
-        public Signuo()
+        public Signup()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            Login login = new Login();
+            login.ShowDialog();
+            this.Close();
         }
     }
 }
