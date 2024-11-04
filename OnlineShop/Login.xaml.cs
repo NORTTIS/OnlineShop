@@ -23,5 +23,13 @@ namespace OnlineShop
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            Signup signup = new Signup();
+            signup.ShowDialog();
+            this.Close();
+        }
     }
 }
