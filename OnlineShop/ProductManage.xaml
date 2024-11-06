@@ -7,6 +7,27 @@
         mc:Ignorable="d"
         Title="ProductManage" Height="450" Width="800">
     <Grid>
-        
+        <ListView Name="lstView" Margin="0,0,400,0" HorizontalAlignment="Left" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderBrush="Black" Foreground="Black" Background="#FFC6ACE5" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="lstView_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}" Width="120"/>
+                    <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Path=Price}" Width="80"/>
+                    <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding Path=Quantity}" Width="60"/>
+                    <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Path=Category}" Width="120"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label x:Name="lbName" Content="Name" HorizontalAlignment="Left" Margin="460,95,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tbName" HorizontalAlignment="Left" Margin="460,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="245"/>
+        <Label x:Name="lbPrice" Content="Price" HorizontalAlignment="Left" Margin="460,147,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tbPrice" HorizontalAlignment="Left" Margin="460,173,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="245"/>
+        <Label x:Name="lbQuantity" Content="Quantity" HorizontalAlignment="Left" Margin="460,207,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tbQuantity" HorizontalAlignment="Left" Margin="460,233,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="245"/>
+        <Label x:Name="lbCategory" Content="Category" HorizontalAlignment="Left" Margin="460,263,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tbCatagory" HorizontalAlignment="Left" Margin="460,289,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="245"/>
+        <Button x:Name="lbDelete" Content="Delete" HorizontalAlignment="Left" Margin="434,353,0,0" VerticalAlignment="Top" Width="62" Background="Red" BorderBrush="#FFBCB1B1" Foreground="White" FontWeight="Bold" Click="lbDelete_Click"/>
+        <Button x:Name="btnEdit" Content="Edit" HorizontalAlignment="Left" Margin="559,353,0,0" VerticalAlignment="Top" Width="62" Background="#FFEADE70" FontWeight="Bold" BorderBrush="{x:Null}" Foreground="#FF6A5C5C" Click="btnEdit_Click"/>
+        <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Margin="682,353,0,0" VerticalAlignment="Top" Width="62" Background="#FF16FF31" FontWeight="Bold" BorderBrush="{x:Null}" Foreground="#FF4F3F3F" Click="btnAdd_Click"/>
+        <TextBox HorizontalAlignment="Left" Margin="465,72,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>
