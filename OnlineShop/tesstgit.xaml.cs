@@ -22,6 +22,7 @@ namespace OnlineShop
         public tesstgit()
         {
             InitializeComponent();
+            publci void 
         }
     }
 }
