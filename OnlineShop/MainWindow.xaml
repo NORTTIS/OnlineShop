@@ -7,6 +7,30 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <ListView Name="lvProduct"  Margin="30,110,260,53" SelectionChanged="lvProduct_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ProductId" DisplayMemberBinding="{Binding Path=ProductId}"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
+                    <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Path=Category}"/>
+                    <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Path=Price}"/>
+                    <GridViewColumn Header="QuantityInStock" DisplayMemberBinding="{Binding Path=QuantityInStock}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Home" HorizontalAlignment="Left" Margin="136,23,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.073,0.754" Width="51"/>
+        <Button Content="Your cart" HorizontalAlignment="Left" Margin="374,23,0,0" VerticalAlignment="Top"/>
+        <Button Content="Logout" HorizontalAlignment="Left" Margin="727,23,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Label Name="lbUser" Content="UserName" HorizontalAlignment="Left" Margin="656,23,0,0" VerticalAlignment="Top"/>
+        <Button Content="Add to cart" HorizontalAlignment="Left" Margin="625,332,0,0" VerticalAlignment="Top"/>
+        <Label Content="ProductId" HorizontalAlignment="Left" Margin="599,86,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="tbproductId" HorizontalAlignment="Left" Margin="599,117,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="599,154,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="tbproductName" HorizontalAlignment="Left" Margin="599,185,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+        <Label Content="Quantity" HorizontalAlignment="Left" Margin="599,261,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="tbProductQty" HorizontalAlignment="Left" Margin="601,292,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" IsReadOnly="False"/>
+        <Label Content="Category" HorizontalAlignment="Left" Margin="601,215,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="tbcate" HorizontalAlignment="Left" Margin="601,246,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
 
     </Grid>
 </Window>
