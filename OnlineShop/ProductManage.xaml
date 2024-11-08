@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ProductManage" Height="450" Width="800">
     <Grid>
-        <ListView Name="lstView" Margin="0,0,400,0" HorizontalAlignment="Left" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderBrush="Black" Foreground="Black" Background="#FFC6ACE5" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="lstView_SelectionChanged">
+        <ListView Name="lstView" Margin="0,41,0,0" HorizontalAlignment="Left" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderBrush="Black" Foreground="Black" Background="#FFC6ACE5" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="lstView_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}" Width="120"/>
@@ -17,17 +17,21 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label x:Name="lbName" Content="Name" HorizontalAlignment="Left" Margin="460,95,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="tbName" HorizontalAlignment="Left" Margin="460,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="245"/>
-        <Label x:Name="lbPrice" Content="Price" HorizontalAlignment="Left" Margin="460,147,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="tbPrice" HorizontalAlignment="Left" Margin="460,173,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="245"/>
-        <Label x:Name="lbQuantity" Content="Quantity" HorizontalAlignment="Left" Margin="460,207,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="tbQuantity" HorizontalAlignment="Left" Margin="460,233,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="245"/>
-        <Label x:Name="lbCategory" Content="Category" HorizontalAlignment="Left" Margin="460,263,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="tbCatagory" HorizontalAlignment="Left" Margin="460,289,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="245"/>
-        <Button x:Name="lbDelete" Content="Delete" HorizontalAlignment="Left" Margin="434,353,0,0" VerticalAlignment="Top" Width="62" Background="Red" BorderBrush="#FFBCB1B1" Foreground="White" FontWeight="Bold" Click="lbDelete_Click"/>
-        <Button x:Name="btnEdit" Content="Edit" HorizontalAlignment="Left" Margin="559,353,0,0" VerticalAlignment="Top" Width="62" Background="#FFEADE70" FontWeight="Bold" BorderBrush="{x:Null}" Foreground="#FF6A5C5C" Click="btnEdit_Click"/>
-        <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Margin="682,353,0,0" VerticalAlignment="Top" Width="62" Background="#FF16FF31" FontWeight="Bold" BorderBrush="{x:Null}" Foreground="#FF4F3F3F" Click="btnAdd_Click"/>
-        <TextBox HorizontalAlignment="Left" Margin="465,72,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="lbName" Content="Name" HorizontalAlignment="Left" Margin="432,87,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tbName" HorizontalAlignment="Left" Margin="500,91,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180"/>
+        <Label x:Name="lbPrice" Content="Price" HorizontalAlignment="Left" Margin="435,123,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tbPrice" HorizontalAlignment="Left" Margin="500,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180"/>
+        <Label x:Name="lbQuantity" Content="Quantity" HorizontalAlignment="Left" Margin="435,157,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tbQuantity" HorizontalAlignment="Left" Margin="500,161,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180"/>
+        <Label x:Name="lbCategory" Content="Category" HorizontalAlignment="Left" Margin="17,8,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="445,270,0,0" VerticalAlignment="Top" Width="62" Background="Red" BorderBrush="#FFBCB1B1" Foreground="White" FontWeight="Bold" Click="btnDelete_Click"/>
+        <Button x:Name="btnEdit" Content="Edit" HorizontalAlignment="Left" Margin="570,270,0,0" VerticalAlignment="Top" Width="62" Background="#FFF0DE3A" FontWeight="Bold" BorderBrush="{x:Null}" Foreground="White" Click="btnEdit_Click"/>
+        <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Margin="693,270,0,0" VerticalAlignment="Top" Width="62" Background="#FF16FF31" FontWeight="Bold" BorderBrush="{x:Null}" Foreground="White" Click="btnAdd_Click"/>
+        <TextBox x:Name="tbId" HorizontalAlignment="Left" Margin="500,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" IsEnabled="False"/>
+        <Label x:Name="lbId" Content="Product ID" HorizontalAlignment="Left" Margin="435,45,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbCategory" HorizontalAlignment="Left" Margin="75,10,0,0" VerticalAlignment="Top" Width="158" SelectionChanged="cbCategory_SelectionChanged"/>
+        <Label x:Name="lbCategory_Copy" Content="Category" HorizontalAlignment="Left" Margin="435,195,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tbCategory" HorizontalAlignment="Left" Margin="500,199,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180"/>
+        <Button x:Name="btnRefresh" Content="Refresh" HorizontalAlignment="Left" Margin="503,318,0,0" VerticalAlignment="Top" Width="62" Background="#FFEC18F1" BorderBrush="#FFBCB1B1" Foreground="White" FontWeight="Bold" Click="btnRefresh_Click"/>
     </Grid>
 </Window>
