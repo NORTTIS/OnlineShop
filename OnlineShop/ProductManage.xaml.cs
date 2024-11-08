@@ -24,19 +24,44 @@ namespace OnlineShop
         public ProductManage()
         {
             InitializeComponent();
-            LoadDataGrid();
+            loadProducts();
         }
 
-        public void LoadDataGrid()
+        public void loadProducts()
         {
             var list = context.Products.Select(c => new
             {
                 Name = c.Name,
                 Price = c.Price,
                 Quantity = c.QuantityInStock,
-                Catagory = c.Category.Name
+                Category = c.Category.Name
             }).Distinct().ToList();
-            dGrid.ItemsSource = list;
+            lstView.ItemsSource = list;
         }
+
+        private void lbDelete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void lstView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedProd = lstView.SelectedItem as dynamic;
+            if (selectedProd != null)
+            {
+                tbName.Text = selectedProd.Name.ToString();
+            }
+        }
+
     }
 }
