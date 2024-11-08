@@ -19,10 +19,5 @@ namespace OnlineShop
     /// </summary>
     public partial class tesstgit : Window
     {
-        public tesstgit()
-        {
-            InitializeComponent();
-            publci void 
-        }
     }
 }
