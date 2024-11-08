@@ -7,7 +7,12 @@
         mc:Ignorable="d"
         Title="ProductManage" Height="450" Width="800">
     <Grid>
-        <DataGrid Name="dGrid" Margin="0,38,400,0"/>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="113*"/>
+            <ColumnDefinition Width="688*"/>
+        </Grid.ColumnDefinitions>
+
 
     </Grid>
 </Window>

@@ -1,6 +1,8 @@
 ﻿use master
 create database OnlineShop
 
+use OnlineShop
+
 CREATE TABLE Accounts (
     account_id INT IDENTITY(1,1) PRIMARY KEY,  -- ID tài khoản, tự động tăng
     username NVARCHAR(50) NOT NULL UNIQUE,     -- Tên đăng nhập, không trùng lặp
@@ -41,4 +43,48 @@ CREATE TABLE Order_Items (
     total_price DECIMAL(10, 2)              
 	FOREIGN KEY (order_id) REFERENCES Orders(order_id) ON DELETE CASCADE,
 	FOREIGN KEY (product_id) REFERENCES Products(product_id) ON DELETE SET NULL,
+
 );
+CREATE TABLE Cart (
+    cart_id INT IDENTITY(1,1) PRIMARY KEY,
+    account_id INT,
+	create_at DATETIME DEFAULT GETDATE(),
+	FOREIGN KEY (account_id) REFERENCES Accounts(account_id) ON DELETE SET NULL,
+);
+CREATE TABLE Cart_Item (
+    cart_item_id INT IDENTITY(1,1) PRIMARY KEY,
+	cart_id INT,
+	product_id INT,
+	product_qty INT,
+	FOREIGN KEY (cart_id) REFERENCES Cart(cart_id) ON DELETE SET NULL,
+	FOREIGN KEY (product_id) REFERENCES Products(product_id) ON DELETE SET NULL,
+);
+
+-- khởi tạo dữ liệu
+-- Insert categories
+INSERT INTO Category (name) VALUES 
+    (N'Men’s Clothing'),
+    (N'Women’s Clothing'),
+    (N'Children’s Clothing'),
+    (N'Accessories');
+
+-- Insert products
+INSERT INTO Products (category_id, name, price, quantity_in_stock) VALUES
+    (1, N'T-Shirt', 19.99, 100),            -- Men’s Clothing
+    (1, N'Jeans', 49.99, 50),               -- Men’s Clothing
+    (2, N'Dress', 59.99, 30),               -- Women’s Clothing
+    (2, N'Skirt', 29.99, 40),               -- Women’s Clothing
+    (3, N'Kids T-Shirt', 14.99, 80),        -- Children’s Clothing
+    (3, N'Kids Jeans', 24.99, 60),          -- Children’s Clothing
+    (4, N'Scarf', 9.99, 200),               -- Accessories
+    (4, N'Hat', 15.99, 150);                -- Accessories
+
+	INSERT INTO Accounts (username, password, address, email, phone_number, role) VALUES
+    (N'customer1', 'password121', N'123 Main St, New York, NY', N'john@example.com', N'1234567890', N'Customer'),
+    (N'customer2', 'password122', N'456 Elm St, Los Angeles, CA', N'jane@example.com', N'0987654321', N'Customer'),
+    (N'admin', 'admin', N'789 Maple St, Chicago, IL', N'admin@example.com', NULL, N'Admin'),
+    (N'manager1', 'manage123', N'101 Pine St, Houston, TX', N'manager@example.com', N'1122334455', N'Manager'),
+    (N'customer3', 'password123', N'202 Oak St, Miami, FL', N'sarah@example.com', N'2233445566', N'Customer')
+
+
+

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Identity.Client.NativeInterop;
+using OnlineShop.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +21,7 @@ namespace OnlineShop
     /// </summary>
     public partial class Login : Window
     {
+        OnlineShopContext context = new OnlineShopContext();
         public Login()
         {
             InitializeComponent();
@@ -30,6 +33,28 @@ namespace OnlineShop
             Signup signup = new Signup();
             signup.ShowDialog();
             this.Close();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            string username = tbusername.Text.ToString();
+            string password = tbpassword.Text.ToString();
+            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+            {
+                Models.Account acc = context.Accounts.FirstOrDefault(x => x.Username == username && x.Password == password);
+                if (acc != null)
+                {
+                    MainWindow window = new MainWindow(acc); // Pass the account to the new window
+                    this.Hide();
+                    window.ShowDialog();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid username or password");
+                }
+            }
+
         }
     }
 }
