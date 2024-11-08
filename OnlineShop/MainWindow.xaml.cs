@@ -1,4 +1,6 @@
-﻿using Microsoft.Identity.Client.NativeInterop;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.Identity.Client;
+using Microsoft.Identity.Client.NativeInterop;
 using OnlineShop.Models;
 using System.Text;
 using System.Windows;
@@ -19,10 +21,12 @@ namespace OnlineShop
     public partial class MainWindow : Window
     {
         OnlineShopContext context = new OnlineShopContext();
+        private Models.Account acc;
         public MainWindow(Models.Account account)
         {
             InitializeComponent();
             // Now you can access _account's data throughout this window
+            acc = account;
             DisplayAccountDetails(account);
             loadListview();
         }
@@ -68,6 +72,94 @@ namespace OnlineShop
                 tbcate.Text = selected.Category.ToString();
             }
 
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (int.TryParse(tbProductQty.Text, out var productId) && productId > 0)
+            {
+                var accountId = acc.AccountId;
+                var errorLabel = lbError;
+                // Validate quantity
+                if (!int.TryParse(tbProductQty.Text, out var quantity) || quantity <= 0)
+                {
+                    errorLabel.Content = "Please enter a valid quantity (greater than 0).";
+                    errorLabel.Foreground = new SolidColorBrush(Colors.Red);
+                    errorLabel.Visibility = Visibility.Visible;
+                    return;
+                }
+
+                errorLabel.Visibility = Visibility.Hidden;
+
+                int cartId = GetOrCreateCart(accountId);
+
+                AddItemToCart(cartId, productId, quantity);
+            }
+
+        }
+
+        //get/create cart
+        private int GetOrCreateCart(int accountId)
+        {
+            var cart = context.Carts.FirstOrDefault(c => c.AccountId == accountId);
+
+            if (cart != null)
+            {
+                // If the cart exists, return the cartId
+                return cart.CartId;
+            }
+            else
+            {
+                // If the cart doesn't exist, create a new cart and save it
+                var newCart = new Cart
+                {
+                    AccountId = accountId,
+                    CreateAt = DateTime.Now // Assuming you have this property to store creation date
+                };
+
+                context.Carts.Add(newCart);
+                context.SaveChanges();
+
+                // Return the ID of the newly created cart
+                return newCart.CartId;
+            }
+
+        }
+
+        // Add the item to the cart
+        private void AddItemToCart(int cartId, int productId, int quantity)
+        {
+            var cart = context.CartItems.FirstOrDefault(c => c.ProductId == productId);
+
+            if (cart != null)
+            {
+                cart.ProductQty += quantity;
+                context.CartItems.Update(cart);
+
+            }
+            else
+            {
+                var cartItem = new CartItem
+                {
+                    CartId = cartId,
+                    ProductId = productId,
+                    ProductQty = quantity
+                };
+
+                context.CartItems.Add(cartItem);
+            }
+
+
+            context.SaveChanges();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            CartManagement cartManagement = new CartManagement(acc);
+            cartManagement.ShowDialog();
+            this.Close();
 
         }
     }
