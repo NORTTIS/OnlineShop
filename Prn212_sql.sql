@@ -1,6 +1,8 @@
 ﻿use master
 create database OnlineShop
+
 use OnlineShop
+
 CREATE TABLE Accounts (
     account_id INT IDENTITY(1,1) PRIMARY KEY,  -- ID tài khoản, tự động tăng
     username NVARCHAR(50) NOT NULL UNIQUE,     -- Tên đăng nhập, không trùng lặp
@@ -41,6 +43,7 @@ CREATE TABLE Order_Items (
     total_price DECIMAL(10, 2)              
 	FOREIGN KEY (order_id) REFERENCES Orders(order_id) ON DELETE CASCADE,
 	FOREIGN KEY (product_id) REFERENCES Products(product_id) ON DELETE SET NULL,
+
 );
 CREATE TABLE Cart (
     cart_id INT IDENTITY(1,1) PRIMARY KEY,
@@ -82,5 +85,6 @@ INSERT INTO Products (category_id, name, price, quantity_in_stock) VALUES
     (N'admin', 'admin', N'789 Maple St, Chicago, IL', N'admin@example.com', NULL, N'Admin'),
     (N'manager1', 'manage123', N'101 Pine St, Houston, TX', N'manager@example.com', N'1122334455', N'Manager'),
     (N'customer3', 'password123', N'202 Oak St, Miami, FL', N'sarah@example.com', N'2233445566', N'Customer')
+
 
 

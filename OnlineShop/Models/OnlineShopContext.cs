@@ -42,7 +42,6 @@ public partial class OnlineShopContext : DbContext
         optionsBuilder.UseSqlServer(strConn);
     }
 
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Account>(entity =>

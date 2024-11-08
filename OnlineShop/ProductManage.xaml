@@ -7,10 +7,12 @@
         mc:Ignorable="d"
         Title="ProductManage" Height="450" Width="800">
     <Grid>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="113*"/>
             <ColumnDefinition Width="688*"/>
         </Grid.ColumnDefinitions>
+
 
     </Grid>
 </Window>

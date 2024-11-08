@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnlineShop.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,23 @@ namespace OnlineShop
     /// </summary>
     public partial class ProductManage : Window
     {
+        OnlineShopContext context = new OnlineShopContext();
         public ProductManage()
         {
             InitializeComponent();
+            LoadDataGrid();
+        }
+
+        public void LoadDataGrid()
+        {
+            var list = context.Products.Select(c => new
+            {
+                Name = c.Name,
+                Price = c.Price,
+                Quantity = c.QuantityInStock,
+                Catagory = c.Category.Name
+            }).Distinct().ToList();
+            dGrid.ItemsSource = list;
         }
     }
 }
