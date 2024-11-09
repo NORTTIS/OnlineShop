@@ -1,4 +1,5 @@
-﻿using OnlineShop.Models;
+﻿using ClosedXML.Excel;
+using OnlineShop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace OnlineShop
 {
@@ -141,6 +143,41 @@ namespace OnlineShop
             context.Products.Add(addProd);
             context.SaveChanges();
             loadProducts();
+        }
+
+        private void btnExport_Click(object sender, RoutedEventArgs e)
+        {
+            var saveFileDialog = new SaveFileDialog
+            {
+                Filter = "Excel Workbook (*.xlsx)|*.xlsx",
+                Title = "Products file"
+            };
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add("Data");
+                    worksheet.Cell(1, 1).Value = "ID";
+                    worksheet.Cell(1, 2).Value = "Name";
+                    worksheet.Cell(1, 3).Value = "Price";
+                    worksheet.Cell(1, 4).Value = "Quantity In Stock";
+                    worksheet.Cell(1, 5).Value = "Category";
+                    var items = lstView.Items.Cast<dynamic>().ToList();
+                    for (int i = 0; i < lstView.Items.Count; i++)
+                    {
+                        var item = items[i];
+                        worksheet.Cell(i + 2, 1).Value = item.Id;
+                        worksheet.Cell(i + 2, 2).Value = item.Name;
+                        worksheet.Cell(i + 2, 3).Value = item.Price;
+                        worksheet.Cell(i + 2, 4).Value = item.Quantity;
+                        worksheet.Cell(i + 2, 5).Value = item.Category;
+                    }
+
+                    workbook.SaveAs(saveFileDialog.FileName);
+                    MessageBox.Show("Exported successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
         }
     }
 }
