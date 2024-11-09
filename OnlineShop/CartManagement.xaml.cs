@@ -138,5 +138,13 @@ namespace OnlineShop
             login.ShowDialog();
             this.Close();
         }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            checkout pay = new checkout(acc);
+            pay.ShowDialog();
+            this.Close();
+        }
     }
 }
