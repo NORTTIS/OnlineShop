@@ -47,6 +47,7 @@ namespace OnlineShop
         {
             var list = context.Products.Select(c => c.Category.Name).Distinct().ToList();
             cbCategory.ItemsSource = list;
+            cbCate.ItemsSource = list;
         }
 
         private void lstView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -58,7 +59,7 @@ namespace OnlineShop
                 tbName.Text = selectedProd.Name.ToString();
                 tbPrice.Text = selectedProd.Price.ToString();
                 tbQuantity.Text = selectedProd.Quantity.ToString();
-                tbCategory.Text = selectedProd.Category.ToString();
+                cbCate.Text = selectedProd.Category.ToString();
             }
         }
 
@@ -89,7 +90,7 @@ namespace OnlineShop
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
@@ -99,7 +100,7 @@ namespace OnlineShop
             tbName.Text = "";
             tbPrice.Text = "";
             tbQuantity.Text = "";
-            tbCategory.Text = "";
+            cbCate.SelectedItem = null;
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
@@ -114,7 +115,7 @@ namespace OnlineShop
                 if(cate == null)
                 {
                     Category newCate = new Category();
-                    newCate.Name = tbCategory.Text;
+                    newCate.Name = cbCate.Text;
                     context.Categories.Add(newCate);
                     prodEdit.Category = newCate;
                 }
@@ -134,7 +135,7 @@ namespace OnlineShop
             string Name = tbName.Text;
             string Price = tbPrice.Text;
             string Quantity = tbQuantity.Text;
-            Category cate = context.Categories.FirstOrDefault(x => x.Name == tbCategory.Text);
+            Category cate = context.Categories.FirstOrDefault(x => x.Name == cbCate.Text);
             var addProd = new Product();
             addProd.Name = Name;
             addProd.Price = decimal.Parse(Price);
@@ -178,6 +179,14 @@ namespace OnlineShop
                     MessageBox.Show("Exported successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
+        }
+
+        private void btnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            Login login = new Login();
+            login.ShowDialog();
+            this.Close();
         }
     }
 }
