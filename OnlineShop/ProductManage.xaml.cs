@@ -163,7 +163,7 @@ namespace OnlineShop
                     worksheet.Cell(1, 3).Value = "Price";
                     worksheet.Cell(1, 4).Value = "Quantity In Stock";
                     worksheet.Cell(1, 5).Value = "Category";
-                    var items = lstView.Items.Cast<dynamic>().ToList();
+                    var items = lstView.Items as dynamic;
                     for (int i = 0; i < lstView.Items.Count; i++)
                     {
                         var item = items[i];
