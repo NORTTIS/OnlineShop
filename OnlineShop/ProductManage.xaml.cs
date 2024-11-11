@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Win32;
+using Microsoft.IdentityModel.Tokens;
 
 namespace OnlineShop
 {
@@ -32,13 +33,14 @@ namespace OnlineShop
 
         public void loadProducts()
         {
-            var list = context.Products.Select(c => new
+            var list = context.Products.Where(c => c.Status == "Available").Select(c => new
             {
                 Id = c.ProductId,
                 Name = c.Name,
                 Price = c.Price,
                 Quantity = c.QuantityInStock,
-                Category = c.Category.Name
+                Category = c.Category.Name,
+                Status = c.Status
             }).Distinct().ToList();
             lstView.ItemsSource = list;
         }
@@ -90,7 +92,15 @@ namespace OnlineShop
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            
+            var Id = Int32.Parse(tbId.Text);
+            var prodDel = context.Products.FirstOrDefault(c => c.ProductId == Id);
+            if (prodDel != null)
+            {
+                prodDel.Status = "Unavailable";
+            }
+            context.SaveChanges();
+            loadProducts();
+            loadCategory();
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
@@ -105,33 +115,38 @@ namespace OnlineShop
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
+            if(string.IsNullOrWhiteSpace(tbName.Text) || 
+                string.IsNullOrWhiteSpace(tbPrice.Text) ||
+                string.IsNullOrWhiteSpace(tbQuantity.Text) ||
+                Convert.ToInt32(tbQuantity.Text) <= 0)
+            {
+                return;
+            }
             var Id = Int32.Parse(tbId.Text);
             var prodEdit = context.Products.FirstOrDefault(c => c.ProductId == Id);
             if (prodEdit != null)
             {
                 prodEdit.Name = tbName.Text;
                 prodEdit.Price = Convert.ToDecimal(tbPrice.Text);
-                Category cate = context.Categories.FirstOrDefault(x => x.Name.Equals(tbCategory.Text));
-                if(cate == null)
-                {
-                    Category newCate = new Category();
-                    newCate.Name = cbCate.Text;
-                    context.Categories.Add(newCate);
-                    prodEdit.Category = newCate;
-                }
-                else
-                {
-                    prodEdit.Category = cate;
-                }
+                Category cate = context.Categories.FirstOrDefault(x => x.Name.Equals(cbCate.Text));
+                prodEdit.Category = cate;
                 prodEdit.QuantityInStock = Convert.ToInt32(tbQuantity.Text);
+                context.SaveChanges();
+                loadProducts();
+                loadCategory();
             }
-            context.SaveChanges();
-            loadProducts();
-            loadCategory();
+
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(tbName.Text) ||
+                string.IsNullOrWhiteSpace(tbPrice.Text) ||
+                string.IsNullOrWhiteSpace(tbQuantity.Text) ||
+                Convert.ToInt32(tbQuantity.Text) <= 0 )
+            {
+                return;
+            }
             string Name = tbName.Text;
             string Price = tbPrice.Text;
             string Quantity = tbQuantity.Text;
@@ -141,6 +156,7 @@ namespace OnlineShop
             addProd.Price = decimal.Parse(Price);
             addProd.Category = cate;
             addProd.QuantityInStock = Convert.ToInt32(Quantity);
+            addProd.Status = "Available";
             context.Products.Add(addProd);
             context.SaveChanges();
             loadProducts();

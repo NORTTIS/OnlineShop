@@ -14,7 +14,7 @@ public partial class Product
     public decimal Price { get; set; }
 
     public int QuantityInStock { get; set; }
-
+    public string Status {  get; set; }
     public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
 
     public virtual Category? Category { get; set; }
