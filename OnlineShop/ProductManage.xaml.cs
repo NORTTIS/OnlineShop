@@ -80,7 +80,8 @@ namespace OnlineShop
                         Name = c.Name,
                         Price = c.Price,
                         Quantity = c.QuantityInStock,
-                        Category = c.Category.Name
+                        Category = c.Category.Name,
+                        Status = c.Status
                     }).ToList();
                     lstView.ItemsSource = list;
                 }

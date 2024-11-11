@@ -28,6 +28,7 @@ CREATE TABLE Products (
     FOREIGN KEY (category_id) REFERENCES Category(category_id) ON DELETE SET NULL,  -- Khóa ngoại tham chiếu đến bảng Category
 );
 
+
 CREATE TABLE Orders (
     order_id INT IDENTITY(1,1) PRIMARY KEY,  -- ID đơn hàng, tự động tăng
     account_id INT,                          -- ID tài khoản của khách hàng

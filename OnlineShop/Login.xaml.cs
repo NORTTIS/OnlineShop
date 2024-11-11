@@ -49,6 +49,13 @@ namespace OnlineShop
                     window.ShowDialog();
                     this.Close();
                 }
+                else if (acc != null && acc.Role.Equals("Manager"))
+                {
+                    ProductManage window = new ProductManage(); // Pass the account to the new window
+                    this.Hide();
+                    window.ShowDialog();
+                    this.Close();
+                }
                 else
                 {
                     MessageBox.Show("Invalid username or password");
