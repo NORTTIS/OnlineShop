@@ -362,5 +362,7 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
+
 #ignor appsettings
+
 node_modules/D:\dotNET\prn212\GitPRJ\OnlineShop\appsettings.json

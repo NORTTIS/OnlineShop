@@ -41,7 +41,6 @@ public partial class OnlineShopContext : DbContext
         var strConn = config["ConnectionStrings:MyDatabase"];
         optionsBuilder.UseSqlServer(strConn);
     }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Account>(entity =>
