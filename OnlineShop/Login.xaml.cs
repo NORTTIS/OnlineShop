@@ -42,7 +42,7 @@ namespace OnlineShop
             if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
             {
                 Models.Account acc = context.Accounts.FirstOrDefault(x => x.Username == username && x.Password == password);
-                if (acc != null)
+                if (acc != null && acc.Role.Equals("Customer"))
                 {
                     MainWindow window = new MainWindow(acc); // Pass the account to the new window
                     this.Hide();
@@ -56,5 +56,6 @@ namespace OnlineShop
             }
 
         }
+
     }
 }

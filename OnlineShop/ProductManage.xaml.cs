@@ -29,6 +29,7 @@ namespace OnlineShop
 
         public void loadProducts()
         {
+
             var list = context.Products.Select(c => new
             {
                 Name = c.Name,

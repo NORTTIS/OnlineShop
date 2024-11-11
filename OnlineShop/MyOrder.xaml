@@ -1,0 +1,41 @@
+﻿<Window x:Class="OnlineShop.MyOrder"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OnlineShop"
+        mc:Ignorable="d"
+        Title="MyOrder" Height="450" Width="800">
+    <Grid>
+        <Button Content="Home" HorizontalAlignment="Left" Margin="182,10,0,0" VerticalAlignment="Top" Click="Button_Click_3"  Background="#FFBBB9FF"/>
+        <Button Content="My Cart" HorizontalAlignment="Left" Margin="390,10,0,0" VerticalAlignment="Top" Click="Button_Click"  Background="#FFBBB9FF"/>
+        <Button Content="Log out" HorizontalAlignment="Left" Margin="738,10,0,0" VerticalAlignment="Top" Click="Button_Click_4" Background="#FFDAD9FF" />
+        <Button Content="My Order" HorizontalAlignment="Left" Margin="531,10,0,0" VerticalAlignment="Top"  Background="#FFBBB9FF"/>
+        <Label Name="accName" Content="Username" HorizontalAlignment="Left" Margin="654,7,0,0" VerticalAlignment="Top"/>
+        <ListView Name="lvOrder"  Margin="47,130,424,112" SelectionChanged="ListView_SelectionChanged" Background="#FFBBB9FF">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="OrderId" DisplayMemberBinding="{Binding Path=OrderId}"/>
+                    <GridViewColumn Header="TotalAmount" DisplayMemberBinding="{Binding Path=TotalAmount}"/>
+                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Path=Status}"/>
+                    <GridViewColumn Header="OrderDate" DisplayMemberBinding="{Binding Path=OrderDate}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <ListView Name="lvOrderCart"  Margin="443,130,40,107" Background="#FFF5ECFF">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path=Id}"/>
+                    <GridViewColumn Header="Instock" DisplayMemberBinding="{Binding Path=Instock}"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
+                    <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding Path=Quantity}"/>
+                    <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Path=Price}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label Content="Your Order" HorizontalAlignment="Left" Margin="47,86,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label Content="Order item" HorizontalAlignment="Left" Margin="443,86,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+
+    </Grid>
+</Window>
