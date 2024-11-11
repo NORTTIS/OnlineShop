@@ -9,6 +9,8 @@ namespace OnlineShop
     /// </summary>
     public partial class App : Application
     {
+        public static String UserRole { get; set; }
+        public static int UserId { get; set; }
     }
 
 }

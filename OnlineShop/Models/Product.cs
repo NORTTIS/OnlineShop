@@ -5,6 +5,18 @@ namespace OnlineShop.Models;
 
 public partial class Product
 {
+    public Product()
+    {
+    }
+
+    public Product(int? categoryId, string name, decimal price, int quantityInStock)
+    {
+        CategoryId = categoryId;
+        Name = name;
+        Price = price;
+        QuantityInStock = quantityInStock;
+    }
+
     public int ProductId { get; set; }
 
     public int? CategoryId { get; set; }
@@ -14,10 +26,8 @@ public partial class Product
     public decimal Price { get; set; }
 
     public int QuantityInStock { get; set; }
-    public string Status {  get; set; }
-    public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
 
     public virtual Category? Category { get; set; }
 
-    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+    public virtual ICollection<OrderItem> OrderItem { get; set; } = new List<OrderItem>();
 }

@@ -5,6 +5,20 @@ namespace OnlineShop.Models;
 
 public partial class Account
 {
+    public Account()
+    {
+    }
+
+    public Account(string username, string password, string? address, string email, string? phoneNumber, string role)
+    {
+        Username = username;
+        Password = password;
+        Address = address;
+        Email = email;
+        PhoneNumber = phoneNumber;
+        Role = role;
+    }
+
     public int AccountId { get; set; }
 
     public string Username { get; set; } = null!;
@@ -19,7 +33,5 @@ public partial class Account
 
     public string Role { get; set; } = null!;
 
-    public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
-
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+    public virtual ICollection<Order> Order { get; set; } = new List<Order>();
 }

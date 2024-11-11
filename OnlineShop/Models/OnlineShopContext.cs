@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -17,39 +16,32 @@ public partial class OnlineShopContext : DbContext
     {
     }
 
-    public virtual DbSet<Account> Accounts { get; set; }
+    public virtual DbSet<Account> Account { get; set; }
 
-    public virtual DbSet<Cart> Carts { get; set; }
+    public virtual DbSet<Category> Category { get; set; }
 
-    public virtual DbSet<CartItem> CartItems { get; set; }
+    public virtual DbSet<Order> Order { get; set; }
 
-    public virtual DbSet<Category> Categories { get; set; }
+    public virtual DbSet<OrderItem> OrderItem { get; set; }
 
-    public virtual DbSet<Order> Orders { get; set; }
-
-    public virtual DbSet<OrderItem> OrderItems { get; set; }
-
-    public virtual DbSet<Product> Products { get; set; }
+    public virtual DbSet<Product> Product { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        Console.WriteLine(Directory.GetCurrentDirectory());
-        IConfiguration config = new ConfigurationBuilder()
-        .SetBasePath(Directory.GetCurrentDirectory())
-        .AddJsonFile("appsettings.json", true, true)
-        .Build();
-        var strConn = config["ConnectionStrings:MyDatabase"];
-        optionsBuilder.UseSqlServer(strConn);
+        var connectionString = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build()
+            .GetConnectionString("DB");
+        optionsBuilder.UseSqlServer(connectionString);
     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Account>(entity =>
         {
-            entity.HasKey(e => e.AccountId).HasName("PK__Accounts__46A222CDFCE752F1");
+            entity.HasKey(e => e.AccountId).HasName("PK__Accounts__46A222CD227D17EF");
 
-            entity.HasIndex(e => e.Email, "UQ__Accounts__AB6E61640B751D6E").IsUnique();
+            entity.HasIndex(e => e.Email, "UQ__Accounts__AB6E61647E489405").IsUnique();
 
-            entity.HasIndex(e => e.Username, "UQ__Accounts__F3DBC572AC0ECDDE").IsUnique();
+            entity.HasIndex(e => e.Username, "UQ__Accounts__F3DBC5726BB0C20B").IsUnique();
 
             entity.Property(e => e.AccountId).HasColumnName("account_id");
             entity.Property(e => e.Address)
@@ -72,52 +64,9 @@ public partial class OnlineShopContext : DbContext
                 .HasColumnName("username");
         });
 
-        modelBuilder.Entity<Cart>(entity =>
-        {
-            entity.HasKey(e => e.CartId).HasName("PK__Cart__2EF52A2729B7392E");
-
-            entity.ToTable("Cart");
-
-            entity.Property(e => e.CartId).HasColumnName("cart_id");
-            entity.Property(e => e.AccountId).HasColumnName("account_id");
-            entity.Property(e => e.CreateAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
-                .HasColumnName("create_at");
-
-            entity.HasOne(d => d.Account).WithMany(p => p.Carts)
-                .HasForeignKey(d => d.AccountId)
-                .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("FK__Cart__account_id__619B8048");
-        });
-
-        modelBuilder.Entity<CartItem>(entity =>
-        {
-            entity.HasKey(e => e.CartItemId).HasName("PK__Cart_Ite__5D9A6C6E1D666AA9");
-
-            entity.ToTable("Cart_Item");
-
-            entity.Property(e => e.CartItemId).HasColumnName("cart_item_id");
-            entity.Property(e => e.CartId).HasColumnName("cart_id");
-            entity.Property(e => e.ProductId).HasColumnName("product_id");
-            entity.Property(e => e.ProductQty).HasColumnName("product_qty");
-
-            entity.HasOne(d => d.Cart).WithMany(p => p.CartItems)
-                .HasForeignKey(d => d.CartId)
-                .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("FK__Cart_Item__cart___6477ECF3");
-
-            entity.HasOne(d => d.Product).WithMany(p => p.CartItems)
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("FK__Cart_Item__produ__656C112C");
-        });
-
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.CategoryId).HasName("PK__Category__D54EE9B4AD6C4E29");
-
-            entity.ToTable("Category");
+            entity.HasKey(e => e.CategoryId).HasName("PK__Category__D54EE9B41BB220E5");
 
             entity.Property(e => e.CategoryId).HasColumnName("category_id");
             entity.Property(e => e.Name)
@@ -127,7 +76,7 @@ public partial class OnlineShopContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Orders__4659622967779F0A");
+            entity.HasKey(e => e.OrderId).HasName("PK__Orders__4659622970510D6C");
 
             entity.Property(e => e.OrderId).HasColumnName("order_id");
             entity.Property(e => e.AccountId).HasColumnName("account_id");
@@ -142,17 +91,17 @@ public partial class OnlineShopContext : DbContext
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("total_amount");
 
-            entity.HasOne(d => d.Account).WithMany(p => p.Orders)
+            entity.HasOne(d => d.Account).WithMany(p => p.Order)
                 .HasForeignKey(d => d.AccountId)
                 .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("FK__Orders__account___5535A963");
+                .HasConstraintName("FK__Orders__account___300424B4");
         });
 
         modelBuilder.Entity<OrderItem>(entity =>
         {
-            entity.HasKey(e => e.OrderItemId).HasName("PK__Order_It__3764B6BC447FE24E");
+            entity.HasKey(e => e.OrderItemId).HasName("PK__Order_It__3764B6BCDF2305A6");
 
-            entity.ToTable("Order_Items");
+            entity.ToTable("Order_Item");
 
             entity.Property(e => e.OrderItemId).HasColumnName("order_item_id");
             entity.Property(e => e.OrderId).HasColumnName("order_id");
@@ -162,20 +111,20 @@ public partial class OnlineShopContext : DbContext
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("total_price");
 
-            entity.HasOne(d => d.Order).WithMany(p => p.OrderItems)
+            entity.HasOne(d => d.Order).WithMany(p => p.OrderItem)
                 .HasForeignKey(d => d.OrderId)
                 .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK__Order_Ite__total__5812160E");
+                .HasConstraintName("FK__Order_Ite__total__32E0915F");
 
-            entity.HasOne(d => d.Product).WithMany(p => p.OrderItems)
+            entity.HasOne(d => d.Product).WithMany(p => p.OrderItem)
                 .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("FK__Order_Ite__produ__59063A47");
+                .HasConstraintName("FK__Order_Ite__produ__33D4B598");
         });
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PK__Products__47027DF50116F670");
+            entity.HasKey(e => e.ProductId).HasName("PK__Products__47027DF5AA2B7BB8");
 
             entity.Property(e => e.ProductId).HasColumnName("product_id");
             entity.Property(e => e.CategoryId).HasColumnName("category_id");
@@ -187,10 +136,10 @@ public partial class OnlineShopContext : DbContext
                 .HasColumnName("price");
             entity.Property(e => e.QuantityInStock).HasColumnName("quantity_in_stock");
 
-            entity.HasOne(d => d.Category).WithMany(p => p.Products)
+            entity.HasOne(d => d.Category).WithMany(p => p.Product)
                 .HasForeignKey(d => d.CategoryId)
                 .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("FK__Products__catego__5070F446");
+                .HasConstraintName("FK__Products__catego__2B3F6F97");
         });
 
         OnModelCreatingPartial(modelBuilder);
