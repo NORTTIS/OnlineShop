@@ -24,6 +24,7 @@ CREATE TABLE Products (
     name NVARCHAR(255) NOT NULL,                -- Tên sản phẩm
     price DECIMAL(10, 2) NOT NULL,              -- Giá sản phẩm
     quantity_in_stock INT NOT NULL,             -- Số lượng sản phẩm trong kho
+	status varchar(20),
     FOREIGN KEY (category_id) REFERENCES Category(category_id) ON DELETE SET NULL,  -- Khóa ngoại tham chiếu đến bảng Category
 );
 
