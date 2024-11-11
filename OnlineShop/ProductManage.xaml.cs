@@ -29,14 +29,14 @@ namespace OnlineShop
 
         public void LoadDataGrid()
         {
-            var list = context.Products.Select(c => new
-            {
-                Name = c.Name,
-                Price = c.Price,
-                Quantity = c.QuantityInStock,
-                Catagory = c.Category.Name
-            }).Distinct().ToList();
-            dGrid.ItemsSource = list;
+            //var list = context.Products.Select(c => new
+            //{
+            //    Name = c.Name,
+            //    Price = c.Price,
+            //    Quantity = c.QuantityInStock,
+            //    Catagory = c.Category.Name
+            //}).Distinct().ToList();
+            //dGrid.ItemsSource = list;
         }
     }
 }

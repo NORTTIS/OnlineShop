@@ -44,7 +44,8 @@ namespace OnlineShop
                         Id = x.ProductId,
                         Instock = x.Product.QuantityInStock,
                         Name = x.Product.Name,
-                        Quantity = x.ProductQty
+                        Quantity = x.ProductQty,
+                        Price = x.Product.Price
 
                     }).ToList().Distinct();
                 lvcartItem.ItemsSource = listCart;
@@ -55,6 +56,7 @@ namespace OnlineShop
         public void loadUserInfo(Models.Account accInfo)
         {
             tbFullname.Text = accInfo.Username;
+            accName.Content = accInfo.Username;
             tbEmail.Text = accInfo.Email;
             tbPhone.Text = accInfo.PhoneNumber;
             tbAddress.Text = accInfo.Address;
@@ -87,8 +89,80 @@ namespace OnlineShop
             this.Close();
         }
 
+        //checkout
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+
+            try
+            {
+                var cart = context.Carts.FirstOrDefault(c => c.AccountId == acc.AccountId);
+                var listCartOrder = context.CartItems
+                    .Where(c => c.CartId == cart.CartId)
+                    .Select(x => new
+                    {
+                        Id = x.ProductId,
+                        Instock = x.Product.QuantityInStock,
+                        Name = x.Product.Name,
+                        Quantity = x.ProductQty,
+                        Price = x.Product.Price
+
+                    }).ToList().Distinct();
+                if (cart != null)
+                {
+                    Order order = new Order();
+                    order.Status = "Pending";
+                    order.AccountId = acc.AccountId;
+                    order.OrderDate = DateTime.Now;
+                    var total = 0;
+                    foreach (var item in listCartOrder)
+                    {
+                        total += (int)item.Price;
+                    }
+
+                    order.TotalAmount = total;
+                    context.Orders.Add(order);
+                    context.SaveChanges();  // Lưu thay đổi để tạo orderId
+                    int orderId = order.OrderId;
+                    bool isValidOrder = true;
+                    foreach (var item in listCartOrder)
+                    {
+                        var prod = context.Products.FirstOrDefault(x => x.ProductId == item.Id);
+                        int resultQty = prod.QuantityInStock - (int)item.Quantity;
+                        if (resultQty < 0)
+                        {
+                            isValidOrder = false;
+                            Mes.Content = "Order not valid, some product out of stock. ";
+                            Mes.Foreground = new SolidColorBrush(Colors.Red);
+                            Mes.Visibility = Visibility.Visible;
+                            return;
+                        }
+                    }
+                    foreach (var item in listCartOrder)
+                    {
+                        var orderItem = new OrderItem();
+                        orderItem.OrderId = orderId;
+                        orderItem.ProductId = item.Id;
+                        orderItem.ProdQty = (int)item.Quantity;
+                        orderItem.TotalPrice = order.TotalAmount;
+                        var prod = context.Products.FirstOrDefault(x => x.ProductId == item.Id);
+                        prod.QuantityInStock -= (int)item.Quantity;
+                        context.Products.Update(prod);
+                        context.OrderItems.Add(orderItem);
+                        context.SaveChanges();
+                    }
+
+                }
+                Mes.Content = "Order successful! ";
+                Mes.Foreground = new SolidColorBrush(Colors.Green);
+                Mes.Visibility = Visibility.Visible;
+
+            }
+            catch (Exception ex)
+            {
+                Mes.Content = e.ToString();
+                Mes.Foreground = new SolidColorBrush(Colors.Red);
+                Mes.Visibility = Visibility.Visible;
+            }
 
         }
 
@@ -107,30 +181,30 @@ namespace OnlineShop
 
                 if (!ValidateEmail(email))
                 {
-                    Error.Content = "Email wrong - format.";
-                    Error.Foreground = new SolidColorBrush(Colors.Red);
-                    Error.Visibility = Visibility.Visible;
+                    Mes.Content = "Email wrong - format.";
+                    Mes.Foreground = new SolidColorBrush(Colors.Red);
+                    Mes.Visibility = Visibility.Visible;
                     return;
                 }
                 if (accByEmail != null && (!accByEmail.AccountId.Equals(acc.AccountId)))
                 {
-                    Error.Content = "Email already existed";
-                    Error.Foreground = new SolidColorBrush(Colors.Red);
-                    Error.Visibility = Visibility.Visible;
+                    Mes.Content = "Email already existed";
+                    Mes.Foreground = new SolidColorBrush(Colors.Red);
+                    Mes.Visibility = Visibility.Visible;
                     return;
                 }
                 if (!ValidateVietnamesePhoneNumber(phone))
                 {
-                    Error.Content = "phone number - wrong format.";
-                    Error.Foreground = new SolidColorBrush(Colors.Red);
-                    Error.Visibility = Visibility.Visible;
+                    Mes.Content = "phone number - wrong format.";
+                    Mes.Foreground = new SolidColorBrush(Colors.Red);
+                    Mes.Visibility = Visibility.Visible;
                     return;
                 }
                 if (!isValidForm)
                 {
-                    Error.Content = "Please enter a valid value.";
-                    Error.Foreground = new SolidColorBrush(Colors.Red);
-                    Error.Visibility = Visibility.Visible;
+                    Mes.Content = "Please enter a valid value.";
+                    Mes.Foreground = new SolidColorBrush(Colors.Red);
+                    Mes.Visibility = Visibility.Visible;
                     return;
                 }
 
@@ -147,15 +221,15 @@ namespace OnlineShop
                     context.Accounts.Update(acc);
                     loadUserInfo(acc);
                     context.SaveChanges();
-                    Error.Visibility = Visibility.Hidden;
+                    Mes.Visibility = Visibility.Hidden;
 
                 }
             }
             catch (Exception ex)
             {
-                Error.Content = e.ToString();
-                Error.Foreground = new SolidColorBrush(Colors.Red);
-                Error.Visibility = Visibility.Visible;
+                Mes.Content = e.ToString();
+                Mes.Foreground = new SolidColorBrush(Colors.Red);
+                Mes.Visibility = Visibility.Visible;
             }
 
 

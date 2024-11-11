@@ -162,5 +162,14 @@ namespace OnlineShop
             this.Close();
 
         }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            MyOrder myOrder = new MyOrder(acc);
+            myOrder.ShowDialog();
+            this.Close();
+
+        }
     }
 }
