@@ -1,0 +1,27 @@
+﻿<Window x:Class="OnlineShop.Views.Menu.AdminMenu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OnlineShop.Views.Menu"
+        mc:Ignorable="d"
+        Title="Admin Menu" Height="350" Width="400"
+        WindowStartupLocation="CenterScreen"
+        Closing="AdminMenu_Closing">
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="200">
+            <TextBlock Text="Admin Menu" FontSize="18" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,20"/>
+
+            <Button Content="User Management" Name="UserManagementButton" Click="UserManagementButton_Click" Height="30" Margin="0,5,0,5"/>
+            <Button Content="Category Management" Name="CategoryManagementButton" Click="CategoryManagementButton_Click" Height="30" Margin="0,5,0,5"/>
+            <Button Content="Product Management" Name="ProductManagementButton" Click="ProductManagementButton_Click" Height="30" Margin="0,5,0,5"/>
+            <Button Content="Order Management" Name="OrderManagementButton" Click="OrderManagementButton_Click" Height="30" Margin="0,5,0,5"/>
+
+            <!-- Change Password Button -->
+            <Button Content="Change Password" Name="ChangePasswordButton" Click="ChangePasswordButton_Click" Height="30" Margin="0,5,0,5"/>
+
+            <!-- Logout Button -->
+            <Button Content="Logout" Name="LogoutButton" Click="LogoutButton_Click" Margin="0,20,0,0" Height="20" Width="80"/>
+        </StackPanel>
+    </Grid>
+</Window>

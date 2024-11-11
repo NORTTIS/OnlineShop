@@ -17,5 +17,5 @@ public partial class Order
 
     public virtual Account? Account { get; set; }
 
-    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+    public virtual ICollection<OrderItem> OrderItem { get; set; } = new List<OrderItem>();
 }
